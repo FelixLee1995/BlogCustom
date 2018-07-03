@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      JNA简单使用 | felixplanet 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    
+
+    <meta name="description" content="JNA简介JNA全称Java Native Access，是一个建立在经典的JNI技术之上的Java开源框架（https://github.com/java-native-access/jna）。JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll）而不需要编写任何Native/JNI代码。开发人员只要在一个java接口中描述目标nati">
+<meta name="keywords" content="JNA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JNA简单使用 | felixplanet">
+<meta property="og:url" content="https://blog.felixplanet.cn/JNA简单使用/2018/06/12/index.html">
+<meta property="og:site_name" content="felixplanet">
+<meta property="og:description" content="JNA简介JNA全称Java Native Access，是一个建立在经典的JNI技术之上的Java开源框架（https://github.com/java-native-access/jna）。JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll）而不需要编写任何Native/JNI代码。开发人员只要在一个java接口中描述目标nati">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-13T08:48:12.276Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JNA简单使用 | felixplanet">
+<meta name="twitter:description" content="JNA简介JNA全称Java Native Access，是一个建立在经典的JNI技术之上的Java开源框架（https://github.com/java-native-access/jna）。JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll）而不需要编写任何Native/JNI代码。开发人员只要在一个java接口中描述目标nati">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/images/icon.png">
+    
+    <!-- <link rel="stylesheet" href="/css/musicplayer.css"> -->
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+    
+
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">felixplanet</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive/index.html" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about/index.html" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/links/index.html" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://github.com/felixlee1995" title="FelixLee1995 on GitHub">
+          <i class='icon icon-social-github'></i>
+          <span class="label">GitHub</span>
+        </a>
+      </li>
+    
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://music.163.com/#/user/home?id=65754777" title="网易云音乐">
+          <i class='icon icon-social-cloudmusic'></i>
+          <span class="label">CloudMusic</span>
+        </a>
+      </li>
+    
+    <!-- China social icon -->
+    <!--
+    
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-douban'></i>
+          <span class="label">Douban</span>
+        </a>
+      </li>
+
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-weibo'></i>
+          <span class="label">Weibo</span>
+        </a>
+      </li>
+
+    -->
+
+
+
+  </ul>
+</nav>
+
+
+
+        </div>
+        <!--   <div class="audioplayer">
+          <audio controls="controls" id="bgMusic" src="music/qiuqian.m4a" autoplay preload loop="loop"></audio>
+        </div> -->
+        <iframe class="audioplayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=29787074&auto=1&height=66"></iframe>
+        <!-- <div id="reactmusicplayer" class="audioplayer" draggable="true"></div> -->
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">JNA简单使用</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-12" class="post-meta__date date">2018-06-12</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+            <font class="categories">
+            &#8226; 分类:
+            <a class="categories-link" href="/categories/技术/">技术</a>
+            </font>
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/JNA/">JNA</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="JNA简介"><a href="#JNA简介" class="headerlink" title="JNA简介"></a>JNA简介</h2><p>JNA全称Java Native Access，是一个建立在经典的JNI技术之上的Java开源框架（<a href="https://github.com/java-native-access/jna）。" target="_blank" rel="noopener">https://github.com/java-native-access/jna）。</a><br>JNA提供一组Java工具类用于在运行期动态访问系统本地库（native library：如Window的dll）而不需要编写任何Native/JNI代码。<br>开发人员只要在一个java接口中描述目标native library的函数与结构，JNA将自动实现Java接口到native function的映射。</p>
+<p><a href="&quot;https://github.com/java-native-access/jna/releases&quot;">jar下载地址</a></p>
+<p><strong>注意点：Jna只能调用dll中的function，而不能调用method。</strong> 解决方法，包装一个原生的dll去调用dll中类的method，只要dll能正常使用，即可通过Jna调用包装后的dll中的function。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>在java中引入jna.jar</li>
+<li>创建接口继承com.sun.jna.Library</li>
+<li>声明需要调用的接口</li>
+<li>使用接口的实例来调用接口中的方法</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">TrApi</span> <span class="keyword">extends</span> <span class="title">Library</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    TrApi TRADERINSTANCE = Native.loadLibrary(<span class="string">"USTPtraderapiAF"</span>, TrApi.class);</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">CreateFtdcTraderApi</span><span class="params">(String pszFlowPath)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">    Trapi api = Trapi.TRADERINSTANCE;</span><br><span class="line">    api.CreateFtdcTraderApi(<span class="string">""</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中对应的参数需要遵循native<-->java的映射关系。</--></p>
+<p>如下：</p>
+<table>
+<thead>
+<tr>
+<th>Native Type</th>
+<th style="text-align:center">Size</th>
+<th style="text-align:center">Java Type</th>
+<th style="text-align:center">Common Windows Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td style="text-align:center">8-bit integer</td>
+<td style="text-align:center">byte</td>
+<td style="text-align:center">BYTE, TCHAR</td>
+</tr>
+<tr>
+<td>short</td>
+<td style="text-align:center">16-bit integer</td>
+<td style="text-align:center">short</td>
+<td style="text-align:center">WORD</td>
+</tr>
+<tr>
+<td>wchar_t</td>
+<td style="text-align:center">16/32-bit character</td>
+<td style="text-align:center">char</td>
+<td style="text-align:center">TCHAR</td>
+</tr>
+<tr>
+<td>int</td>
+<td style="text-align:center">32-bit integer</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">DWORD</td>
+</tr>
+<tr>
+<td>int</td>
+<td style="text-align:center">boolean value</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">BOOL</td>
+</tr>
+<tr>
+<td>long</td>
+<td style="text-align:center">32/64-bit integer</td>
+<td style="text-align:center">NativeLong</td>
+<td style="text-align:center">LONG</td>
+</tr>
+<tr>
+<td>long long</td>
+<td style="text-align:center">64-bit integer</td>
+<td style="text-align:center">long</td>
+<td style="text-align:center">__int64</td>
+</tr>
+<tr>
+<td>float</td>
+<td style="text-align:center">32-bit FP</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>double</td>
+<td style="text-align:center">64-bit FP</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>char*</td>
+<td style="text-align:center">C string</td>
+<td style="text-align:center">String</td>
+<td style="text-align:center">LPTCSTR</td>
+</tr>
+<tr>
+<td>void*</td>
+<td style="text-align:center">pointer</td>
+<td style="text-align:center">Pointer</td>
+<td style="text-align:center">LPVOID, HANDLE, LP</td>
+</tr>
+</tbody>
+</table>
+<p>若传递的是结构体，需要定义结构体d额类结构，继承com.sun.jna.Structure并实现getFieldOrder方法，来返回字段顺序。</p>
+<p><strong>示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApiStruct</span> <span class="keyword">extends</span> <span class="title">Structure</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">byte</span>[] byteArr = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">21</span>];</span><br><span class="line">    <span class="keyword">int</span> [] intArr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">12</span>];</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> List&lt;String&gt; <span class="title">getFieldOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List order = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">        order.add(<span class="string">"byteArr"</span>);</span><br><span class="line">        order.add(<span class="string">"intArr"</span>);</span><br><span class="line">        <span class="keyword">return</span> order;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：在传递参数时，准确的来说是给dll传递了一段内存，并定义了内部的字段顺序，故结构体内的长度需要是确定好的，即结构体内有数组时，一定要先声明大小，分配好内存空间，此时传递的结构体才是完好可用的，否则将会产生 invalid memory  access错误。</strong></p>
+<h2 id="回调函数的使用"><a href="#回调函数的使用" class="headerlink" title="回调函数的使用"></a>回调函数的使用</h2><p>回调的意义在于dll内部声明一个回调函数的接口，并在需要调用的函数中传入回调函数的指针，就可以在函数中指定的位置调用外部实现接口。</p>
+<p>dll中定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(* MyCallback)</span><span class="params">(<span class="keyword">char</span>*errorMsg)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">EXPORTAPI <span class="keyword">void</span> <span class="title">orderInsert</span><span class="params">(OrderField order,Mycallback func)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>然后在dll中需要使用的地方调用 Mycallback</p>
+<p>java中需要在jna接口中定义回调接口如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">orderInsert</span><span class="params">(OrderField,Callbackfunc)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callbackfunc</span> <span class="keyword">extends</span> <span class="title">Callback</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callback_fun</span><span class="params">(String msg)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallbackfuncImpl</span> <span class="keyword">implements</span> <span class="title">Callbackfunc</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callback_fun</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Message:"</span> + msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">    API api = api.instance;</span><br><span class="line">    API.CallbackfuncImpl func = <span class="keyword">new</span> API.Callbackfuncimpl();</span><br><span class="line">    api.orderInsert(<span class="keyword">new</span> OrderField(),func);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+
+    <!--PC版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytF10y65',
+conf: 'prod_70885fa90e829298c585b46697307d9c'
+});
+</script>
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | powered by <a href="https://hexo.io/">Hexo</a> | theme <a href="https://github.com/someus/huno">Huno</a></span>  
+    
+</footer>
+        </div>
+    </div>
+
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    <script src="/js/musicplayer.js"></script>
+
+    
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120805226-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120805226-1');
+</script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      ajax跨域问题及其解决方案 | felixplanet 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    
+
+    <meta name="description" content="ajax跨域问题是经常遇到的了，这次总结一下问题出现的原因和解决方案。 什么情况下会出现跨域呢？  浏览器处于安全因素，对请求进行了限制（极有可能请求是200的） 发出的请求是XHR请求，即XMLHttpRequest，当我们请求的是script类型或者是其他静态资源时，不一定会产生跨域问题。 请求的资源是跨域的，即协议，域名，端口，三者任一不一致时，才满足跨域的基本条件。  针对浏览器的限制，我">
+<meta name="keywords" content="ajax">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ajax跨域问题及其解决方案 | felixplanet">
+<meta property="og:url" content="https://blog.felixplanet.cn/ajax跨域问题及其解决方案/2018/05/03/index.html">
+<meta property="og:site_name" content="felixplanet">
+<meta property="og:description" content="ajax跨域问题是经常遇到的了，这次总结一下问题出现的原因和解决方案。 什么情况下会出现跨域呢？  浏览器处于安全因素，对请求进行了限制（极有可能请求是200的） 发出的请求是XHR请求，即XMLHttpRequest，当我们请求的是script类型或者是其他静态资源时，不一定会产生跨域问题。 请求的资源是跨域的，即协议，域名，端口，三者任一不一致时，才满足跨域的基本条件。  针对浏览器的限制，我">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-05-03T05:14:45.650Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ajax跨域问题及其解决方案 | felixplanet">
+<meta name="twitter:description" content="ajax跨域问题是经常遇到的了，这次总结一下问题出现的原因和解决方案。 什么情况下会出现跨域呢？  浏览器处于安全因素，对请求进行了限制（极有可能请求是200的） 发出的请求是XHR请求，即XMLHttpRequest，当我们请求的是script类型或者是其他静态资源时，不一定会产生跨域问题。 请求的资源是跨域的，即协议，域名，端口，三者任一不一致时，才满足跨域的基本条件。  针对浏览器的限制，我">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/images/icon.png">
+    
+    <!-- <link rel="stylesheet" href="/css/musicplayer.css"> -->
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+    
+
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">felixplanet</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive/index.html" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about/index.html" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/links/index.html" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://github.com/felixlee1995" title="FelixLee1995 on GitHub">
+          <i class='icon icon-social-github'></i>
+          <span class="label">GitHub</span>
+        </a>
+      </li>
+    
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://music.163.com/#/user/home?id=65754777" title="网易云音乐">
+          <i class='icon icon-social-cloudmusic'></i>
+          <span class="label">CloudMusic</span>
+        </a>
+      </li>
+    
+    <!-- China social icon -->
+    <!--
+    
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-douban'></i>
+          <span class="label">Douban</span>
+        </a>
+      </li>
+
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-weibo'></i>
+          <span class="label">Weibo</span>
+        </a>
+      </li>
+
+    -->
+
+
+
+  </ul>
+</nav>
+
+
+
+        </div>
+        <!--   <div class="audioplayer">
+          <audio controls="controls" id="bgMusic" src="music/qiuqian.m4a" autoplay preload loop="loop"></audio>
+        </div> -->
+        <iframe class="audioplayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=29787074&auto=1&height=66"></iframe>
+        <!-- <div id="reactmusicplayer" class="audioplayer" draggable="true"></div> -->
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">ajax跨域问题及其解决方案</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-05-03" class="post-meta__date date">2018-05-03</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+            <font class="categories">
+            &#8226; 分类:
+            <a class="categories-link" href="/categories/技术/">技术</a>
+            </font>
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/ajax/">ajax</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>ajax跨域问题是经常遇到的了，这次总结一下问题出现的原因和解决方案。</p>
+<p>什么情况下会出现跨域呢？</p>
+<ol>
+<li>浏览器处于安全因素，对请求进行了限制（极有可能请求是200的）</li>
+<li>发出的请求是XHR请求，即XMLHttpRequest，当我们请求的是script类型或者是其他静态资源时，不一定会产生跨域问题。</li>
+<li>请求的资源是跨域的，即协议，域名，端口，三者任一不一致时，才满足跨域的基本条件。</li>
+</ol>
+<p>针对浏览器的限制，我们可以使用命令行启动来解决，chrome可以直接 </p>
+<blockquote>
+<p>–disable-web-security</p>
+</blockquote>
+<p>第二种解决方案是，使用jsonp来请求，这时候，前台ajax里规定好对应的回调函数，即可对应解析出后台返回的包装好的js代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">		type: <span class="string">"get"</span>,</span><br><span class="line">		url: base+<span class="string">"/getJsonp"</span>,</span><br><span class="line">		dataType: <span class="string">"jsonp"</span>,</span><br><span class="line">		jsonp: <span class="string">"callback"</span>, <span class="comment">//默认是callback，和后台对应</span></span><br><span class="line">		success: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(data);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>但是jsonp有很大的弊端。首先是服务器需要改动，若是spring框架，需要增加AbstractJsonpResponseBodyAdvice的切片，规定回调函数的名称，若是第三方的api，GG。其次是只支持GET的请求和jsonp的数据类型。可以说，jsonp的方式，适用于后台可控的情况。而且代码需要配合改动。</p>
+<p>那么在被调用方，还有什么方式可以快捷地支持跨域呢？</p>
+<ol>
+<li>Filter. 应用服务器通过增加filter来在 response header里加入跨域的支持。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span></span><br><span class="line"><span class="function">		<span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">	HttpServletResponse res = (HttpServletResponse) response;</span><br><span class="line">	<span class="comment">//让所有origin域名都支持跨域</span></span><br><span class="line">	HttpServletRequest req = (HttpServletRequest) request;</span><br><span class="line">	</span><br><span class="line">	String origin = req.getHeader(<span class="string">"origin"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!org.springframework.util.StringUtils.isEmpty(origin)) &#123;</span><br><span class="line">		res.addHeader(<span class="string">"Access-Control-Allow-Origin"</span>, origin);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//让所有header都支持跨域</span></span><br><span class="line">	String header = req.getHeader(<span class="string">"Access-Control-Request-Headers"</span>);</span><br><span class="line">	<span class="keyword">if</span> (!org.springframework.util.StringUtils.isEmpty(header)) &#123;</span><br><span class="line">		res.addHeader(<span class="string">"Access-Control-Allow-Headers"</span>, header);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	res.addHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET"</span>);</span><br><span class="line">	res.addHeader(<span class="string">"Access-Control-Allow-Credentials"</span>, <span class="string">"true"</span>);</span><br><span class="line">	res.addHeader(<span class="string">"Access-Control-Max-Age"</span>, <span class="string">"3600"</span>);</span><br><span class="line">	</span><br><span class="line">	chain.doFilter(request, response);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的话浏览器在接受到response之后，在header里面读到允许跨域的范围信息，即可支持跨域。（若是spring框架，更快捷的方式是在controller的 类或者方法上加上 <strong><em>@CrossOrigin</em></strong> 注解）</p>
+<p>如果不想修改应用服务器呢？还可以在静态服务器上设置好参数，是一样的作用。以Nginx为例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~ /&#123;</span><br><span class="line">    add_header Access-Control-Allow-Origin $http_origin;</span><br><span class="line">    add_header Access-Control-Allow-Headers $http_access_control_request_headers;</span><br><span class="line">    add_header Access-Control-Allow-Methods *;</span><br><span class="line">    add_header Access-Control-Max-Age <span class="number">3600</span>;</span><br><span class="line">    add_header Access-Control-Allow-Credentials <span class="keyword">true</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>在对应vhost的配置文件里加入跨域支持，reload，即可支持跨域。</p>
+<p>终极的解决方案，是我们可以直接配置nginx反向代理，把所有的请求路径代理到nginx服务器上。</p>
+<p><strong>关于Nginx的学习，待续！</strong></p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+
+    <!--PC版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytF10y65',
+conf: 'prod_70885fa90e829298c585b46697307d9c'
+});
+</script>
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | powered by <a href="https://hexo.io/">Hexo</a> | theme <a href="https://github.com/someus/huno">Huno</a></span>  
+    
+</footer>
+        </div>
+    </div>
+
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    <script src="/js/musicplayer.js"></script>
+
+    
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120805226-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120805226-1');
+</script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

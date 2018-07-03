@@ -1,0 +1,30 @@
+{
+    "tracks": [{
+            "name": "秋千",
+            "artists": [{
+                "name": "乃木坂46"
+            }],
+            "album": {
+                "name": "再见的意味",
+                "picUrl": "https://blog.felixplanet.cn/images/cover.jpg"
+            },
+            "duration": 0,
+            "mp3Url": "https://blog.felixplanet.cn/music/qiuqian.m4a"
+        },
+        {
+            "name": "自由の彼方",
+            "artists": [{
+                "name": "乃木坂46"
+            }],
+            "album": {
+                "name": "发夹",
+                "picUrl": "https://blog.felixplanet.cn/images/nogicover7.jpg"
+            },
+            "duration": 0,
+            "mp3Url": "https://blog.felixplanet.cn/music/freedom.mp3"
+        }
+
+    ]
+
+
+}

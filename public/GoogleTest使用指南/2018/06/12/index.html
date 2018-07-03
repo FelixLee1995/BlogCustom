@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      GoogleTest使用指南(一)基础 | felixplanet 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    
+
+    <meta name="description" content="下载，编译官方代码托管于github,使用gitclone拉到本地。 进入googletest/gooletest/msvc目录下，可以直接用vs打开gtest.sln解决方案。 接着直接编译gtest模块， 若编译失败,打开“解决方案资源管理器”，右键打开项目“属性”，在C/C++ –&amp;gt; “预处理器”–&amp;gt; “预处理定义”中增加以下行即可： _VARIADIC_MAX=10; 在deb">
+<meta name="keywords" content="GoogleTest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogleTest使用指南(一)基础 | felixplanet">
+<meta property="og:url" content="https://blog.felixplanet.cn/GoogleTest使用指南/2018/06/12/index.html">
+<meta property="og:site_name" content="felixplanet">
+<meta property="og:description" content="下载，编译官方代码托管于github,使用gitclone拉到本地。 进入googletest/gooletest/msvc目录下，可以直接用vs打开gtest.sln解决方案。 接着直接编译gtest模块， 若编译失败,打开“解决方案资源管理器”，右键打开项目“属性”，在C/C++ –&amp;gt; “预处理器”–&amp;gt; “预处理定义”中增加以下行即可： _VARIADIC_MAX=10; 在deb">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://blog.felixplanet.cn/images/googletest_1.png">
+<meta property="og:updated_time" content="2018-06-19T02:22:48.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GoogleTest使用指南(一)基础 | felixplanet">
+<meta name="twitter:description" content="下载，编译官方代码托管于github,使用gitclone拉到本地。 进入googletest/gooletest/msvc目录下，可以直接用vs打开gtest.sln解决方案。 接着直接编译gtest模块， 若编译失败,打开“解决方案资源管理器”，右键打开项目“属性”，在C/C++ –&amp;gt; “预处理器”–&amp;gt; “预处理定义”中增加以下行即可： _VARIADIC_MAX=10; 在deb">
+<meta name="twitter:image" content="https://blog.felixplanet.cn/images/googletest_1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/images/icon.png">
+    
+    <!-- <link rel="stylesheet" href="/css/musicplayer.css"> -->
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+    
+
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">felixplanet</a></h1>
+        <hr class="panel-cover__divider" />
+
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive/index.html" title="" class="">归档</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about/index.html" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/links/index.html" title="" class="">友链</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+<nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://github.com/felixlee1995" title="FelixLee1995 on GitHub">
+          <i class='icon icon-social-github'></i>
+          <span class="label">GitHub</span>
+        </a>
+      </li>
+    
+    
+      <!-- Github -->
+      <li class="navigation__item">
+        <a href="https://music.163.com/#/user/home?id=65754777" title="网易云音乐">
+          <i class='icon icon-social-cloudmusic'></i>
+          <span class="label">CloudMusic</span>
+        </a>
+      </li>
+    
+    <!-- China social icon -->
+    <!--
+    
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-douban'></i>
+          <span class="label">Douban</span>
+        </a>
+      </li>
+
+      <li class="navigation__item">
+        <a href="" title="">
+          <i class='icon cs-icon-weibo'></i>
+          <span class="label">Weibo</span>
+        </a>
+      </li>
+
+    -->
+
+
+
+  </ul>
+</nav>
+
+
+
+        </div>
+        <!--   <div class="audioplayer">
+          <audio controls="controls" id="bgMusic" src="music/qiuqian.m4a" autoplay preload loop="loop"></audio>
+        </div> -->
+        <iframe class="audioplayer" frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=29787074&auto=1&height=66"></iframe>
+        <!-- <div id="reactmusicplayer" class="audioplayer" draggable="true"></div> -->
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">GoogleTest使用指南(一)基础</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-12" class="post-meta__date date">2018-06-12</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+            <font class="categories">
+            &#8226; 分类:
+            <a class="categories-link" href="/categories/技术/">技术</a>
+            </font>
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/GoogleTest/">GoogleTest</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="下载，编译"><a href="#下载，编译" class="headerlink" title="下载，编译"></a>下载，编译</h2><p>官方代码托管于<a href="https://github.com/google/googletest" target="_blank" rel="noopener">github</a>,使用gitclone拉到本地。</p>
+<p>进入googletest/gooletest/msvc目录下，可以直接用vs打开gtest.sln解决方案。</p>
+<p>接着直接编译gtest模块，</p>
+<p><strong>若编译失败</strong>,打开“解决方案资源管理器”，右键打开项目“属性”，在C/C++ –&gt; “预处理器”–&gt; “预处理定义”中增加以下行即可：</p>
+<p>_VARIADIC_MAX=10;</p>
+<p>在debug目录下生成gtestd.lib，将gtestd.lib和 gtest/include/gtest头文件目录包含进入待测试的项目。</p>
+<p>在VS工程中，添加c/c++工程中外部头文件及库的基本步骤：</p>
+<pre><code>* 添加工程的头文件目录：工程---属性---配置属性---c/c++---常规---附加包含目录：加上头文件存放目录。
+
+* 添加文件引用的lib静态库路径：工程---属性---配置属性---链接器---常规---附加库目录：加上lib文件存放目录。然后添加工程引用的lib文件名：工程---属性---配置属性---链接器---输入---附加依赖项：加上lib文件名。
+
+* 若项目是静态链接库，则在(库管理器-&gt;常规)里添加你引用库的库目录和依赖的lib名称。
+
+* 添加工程引用的dll动态库：把引用的dll放到工程的可执行文件所在的目录下。
+</code></pre><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>在源文件中包含头文件  </li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;gtest/gtest.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>编写测试用例</li>
+</ul>
+<p><strong>待测函数</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Foo</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (b!=<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> a%b;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>编写测试用例</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TEST(FooTest, Calmod)</span><br><span class="line">&#123;</span><br><span class="line">    EXPECT_EQ(<span class="number">2</span>, Foo(<span class="number">10</span>, <span class="number">4</span>));</span><br><span class="line">    EXPECT_EQ(<span class="number">3</span>, Foo(<span class="number">10</span>, <span class="number">7</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，第一个参数为待测函数名首字母大写+Test。<br>EXPECT_EQ则是GTest断言的一种形式。<br>断言有两大类。</p>
+<ul>
+<li>ASSERT_* 当检查点失败时，退出当前函数，被认为是fatal错误。</li>
+<li>EXPERT_* 当检查点失败时，继续往下执行。  </li>
+</ul>
+<p><strong>运行main函数执行测试</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    testing::InitGoogleTest(&amp;argc, argv);</span><br><span class="line">    <span class="keyword">return</span> RUN_ALL_TESTS();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>testing::InitGoogleTest(&amp;argc, argv);<br>gtest的测试案例允许接收一系列的命令行参数，因此，我们将命令行参数传递给gtest，进行一些初始化操作。</p>
+<p><strong>RUN_ALL_TEST()运行源文件内定义的所有测试用例，并根据其返回值判断其所包含的测试用例是否通过。故，一定要接受并返回！！！</strong></p>
+<p><strong>测试截图</strong>:</p>
+<p><img src="https://blog.felixplanet.cn/images/googletest_1.png" alt="screenshot"></p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+
+    <!--PC版-->
+<div id="SOHUCS"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytF10y65',
+conf: 'prod_70885fa90e829298c585b46697307d9c'
+});
+</script>
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | powered by <a href="https://hexo.io/">Hexo</a> | theme <a href="https://github.com/someus/huno">Huno</a></span>  
+    
+</footer>
+        </div>
+    </div>
+
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    <script src="/js/musicplayer.js"></script>
+
+    
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120805226-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120805226-1');
+</script>
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
